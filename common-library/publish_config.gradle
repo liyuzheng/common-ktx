@@ -1,7 +1,7 @@
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 ext{
-    uploadto = "jitpack"  //github or mavenCentral  jitpack
+    uploadto = "github"  //github or mavenCentral
 
 
     group_id = "io.github.liyuzheng"

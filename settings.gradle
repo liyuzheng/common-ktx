@@ -4,13 +4,18 @@ pluginManagement {
         google()
         mavenCentral()
         maven {
+            Properties properties = new Properties()
+            File propertyFile = new File(rootDir.getAbsolutePath() + "/local.properties")
+            properties.load(propertyFile.newDataInputStream())
+            def token = properties.getProperty('githubtoken')
+            def name = properties.getProperty('liyuzheng')
             url = uri("https://maven.pkg.github.com/liyuzheng/common-ktx")
             credentials {
 //                username = rootProject.properties['githubname']
 //                password = rootProject.properties['githubtoken']
-                username = "liyuzheng"
+                username = name
 //                password = "Lyzam20201990!"
-                password = "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"
+                password = token
             }
         }
     }
@@ -21,13 +26,18 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
+            Properties properties = new Properties()
+            File propertyFile = new File(rootDir.getAbsolutePath() + "/local.properties")
+            properties.load(propertyFile.newDataInputStream())
+            def token = properties.getProperty('githubtoken')
+            def name = properties.getProperty('liyuzheng')
             url = uri("https://maven.pkg.github.com/liyuzheng/common-ktx")
             credentials {
 //                username = rootProject.properties['githubname']
 //                password = rootProject.properties['githubtoken']
-                username = "liyuzheng"
+                username = name
 //                password = "Lyzam20201990!"
-                password = "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"
+                password = token
             }
         }
     }
