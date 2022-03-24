@@ -1,0 +1,19 @@
+ext{
+    uploadto = "github"  //github or mavenCentral
+
+
+    group_id = "io.github.liyuzheng"
+    version_name = "1.0.1"
+    version_code = 2
+    artifact_id = "simplemarqueeview"
+    library_path = "simplemarqueeview-library-release.aar"
+    pom_name = "SimpleMarqueeView"
+    pom_description = "SimpleMarqueeView"
+    pom_url = "https://github.com/liyuzheng"
+    develop_id = "liyuzheng"
+    develop_name = "liyuzheng"
+    develop_email = "yuzheng_li@live.cn"
+    scm_connection = "https://github.com/liyuzheng"
+    scm_developerConnection = "https://github.com/liyuzheng"
+    scm_url = "https://github.com/liyuzheng"
+}

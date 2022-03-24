@@ -1,0 +1,70 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+group = group_id
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def p_name = properties.getProperty("ossrhUsername")
+def p_token = properties.getProperty("ossrhPassword")
+version = version_name
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = artifact_id
+            artifact("$buildDir/outputs/aar/${library_path}")
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = pom_name
+                description = pom_description
+                url = pom_url
+                properties = [
+                        myProp: "value",
+                        "prop.with.dots": "anotherValue"
+                ]
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = develop_id
+                        name = develop_name
+                        email = develop_email
+                    }
+                }
+                scm {
+                    connection = scm_connection
+                    developerConnection = scm_developerConnection
+                    url = scm_url
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl ="https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = p_name
+                password = p_token
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}

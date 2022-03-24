@@ -1,0 +1,50 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+apply from: 'publish_config.gradle'
+
+if(uploadto == "github"){
+    apply from: 'publish_github.gradle'
+}else if(uploadto == "mavenCentral"){
+    apply from: 'publish_maven.gradle'
+}else {
+    throw new Exception("uploadto invalid.github or mavenCentral")
+}
+
+
+android {
+    compileSdk rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.appTargetSdkVersion
+        versionCode version_code
+        versionName version_name
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+
+
+
+}
+
+dependencies {
+
+    compileOnly "androidx.core:core-ktx:$core_ktx_version"
+    compileOnly "androidx.appcompat:appcompat:$appcompat_version"
+    compileOnly "androidx.recyclerview:recyclerview:$recycler_view_version"
+}
+

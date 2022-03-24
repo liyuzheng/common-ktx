@@ -1,0 +1,75 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+apply from: 'publish_config.gradle'
+
+group = group_id
+version = version_name
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def p_name = properties.getProperty("githubname")
+def p_token = properties.getProperty("githubtoken")
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = artifact_id
+            artifact("$buildDir/outputs/aar/${library_path}")
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = pom_name
+                description = pom_description
+                url = pom_url
+                properties = [
+                        myProp: "value",
+                        "prop.with.dots": "anotherValue"
+                ]
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = develop_id
+                        name = develop_name
+                        email = develop_email
+                    }
+                }
+                scm {
+                    connection = scm_connection
+                    developerConnection = scm_developerConnection
+                    url = scm_url
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "githubpage"
+            // change URLs to point to your repos, e.g. http://my.org/repo
+            def releasesRepoUrl = "https://maven.pkg.github.com/liyuzheng/common-ktx"
+            url = releasesRepoUrl
+            credentials {
+                /** Create github.properties in root project folder file with
+                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN
+                 ** Set env variable GPR_USER & GPR_API_KEY if not adding a properties file**/
+
+                username = p_name
+                password = p_token
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
