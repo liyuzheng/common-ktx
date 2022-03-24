@@ -7,16 +7,16 @@ apply from: 'publish_config.gradle'
 group = group_id
 
 
-if(uploadto == "github"){
-    apply from: 'publish_github.gradle'
-}else if(uploadto == "mavenCentral"){
-    apply from: 'publish_maven.gradle'
-}else if(uploadto == "jitpack"){
-
-}
-else {
-    throw new Exception("uploadto invalid.github or mavenCentral")
-}
+//if(uploadto == "github"){
+//    apply from: 'publish_github.gradle'
+//}else if(uploadto == "mavenCentral"){
+//    apply from: 'publish_maven.gradle'
+//}else if(uploadto == "jitpack"){
+//
+//}
+//else {
+//    throw new Exception("uploadto invalid.github or mavenCentral")
+//}
 
 
 android {
@@ -53,17 +53,15 @@ dependencies {
     compileOnly "androidx.recyclerview:recyclerview:$recycler_view_version"
 }
 
-if(uploadto == "jitpack") {
-    afterEvaluate {
-        publishing {
-            publications {
-                // Creates a Maven publication called "release".
-                release(MavenPublication) {
-                    from components.release
-                    groupId = group_id
-                    artifactId = artifact_id
-                    version = version_name
-                }
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                groupId = group_id
+                artifactId = artifact_id
+                version = version_name
             }
         }
     }
