@@ -1,6 +1,3 @@
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
-
 group = group_id
 
 Properties properties = new Properties()

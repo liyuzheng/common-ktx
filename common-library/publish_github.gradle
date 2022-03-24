@@ -1,5 +1,3 @@
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
 apply from: 'publish_config.gradle'
 
 group = group_id
