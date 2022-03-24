@@ -5,7 +5,7 @@ ext{
 
 
     group_id = "io.github.liyuzheng"
-    version_name = "1.0.1"
+    version_name = "1.0.2"
     version_code = 2
     artifact_id = "common-ktx"
     library_path = "common-library-release.aar"
